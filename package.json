@@ -1,0 +1,27 @@
+{
+  "name": "zhoushirong",
+  "version": "1.0.0",
+  "description": "a fiction crawler",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhoushirong/crawler.git"
+  },
+  "keywords": [
+    "crawler",
+    "nodejs"
+  ],
+  "author": "zhoushirong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhoushirong/crawler/issues"
+  },
+  "homepage": "https://github.com/zhoushirong/crawler#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
