@@ -1,7 +1,7 @@
 {
   "name": "zhoushirong",
   "version": "1.0.0",
-  "description": "a fiction crawler",
+  "description": "爬虫系统：爬这个网站的小说 http://www.biquku.com/",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -22,6 +22,12 @@
   },
   "homepage": "https://github.com/zhoushirong/crawler#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "babel": "^6.5.2",
+    "crawler": "^0.4.3",
+    "debug": "^2.2.0",
+    "express": "^4.14.0",
+    "jsdom": "^9.6.0",
+    "mkdirp": "^0.5.1",
+    "path": "^0.12.7"
   }
 }
