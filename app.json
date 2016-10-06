@@ -1,0 +1,30 @@
+{
+    "apps": [{
+        "name": "crawler",
+        "script": "bin/www",
+        "log_date_format": "YYYY-MM-DD HH:mm:SS",
+        "merge_logs": true,
+        "log_file": "./logs/crawler.log",
+        "error_file": "./logs/crawler-err.log",
+        "out_file": "./logs/crawler-out.log",
+        "pid_file": "./logs/crawler.pid",
+        "exec_mode": "fork",
+        "instances": "1",
+        "max_restarts": 500,
+        "max_memory_restart": "5G",
+        "watch": true,
+        "ignore_watch":"./logs",
+        "env_production": {
+            "NODE_ENV": "production"
+        },
+        "env_development": {
+            "NODE_ENV": "development"
+        },
+        "env_test": {
+            "NODE_ENV": "test"
+        },
+        "env_prepare": {
+            "NODE_ENV": "prepare"
+        }
+    }]
+}
