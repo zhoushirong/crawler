@@ -7,7 +7,7 @@ function writeContent(content, path) {
 			throw err;
 		}
 		console.log('content It\'s saved!');
-		process.exit();
+		//process.exit();
 	});
 }
 

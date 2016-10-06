@@ -3,6 +3,7 @@ let Crawler = require("crawler");
 let jsdom = require('jsdom');
 let writeDirectory = require("./writeDirectory");
 let path = require("path");
+let bookName = "";
 
 let getDir = new Crawler({
 	jQuery: jsdom,
@@ -39,9 +40,10 @@ function crawlerCallback(error, result, $) {
 		});
 	}
 	//将信息写入
-	writeDirectory(currentBook, path.join(__dirname, "../data/directory.json"));
+	writeDirectory(currentBook, path.join(__dirname, `../data/${bookName}/directory.json`));
 }
 
-module.exports = function(url) {
+module.exports = function(url, name) {
+	bookName = name;
 	getDir.queue(url);
 }

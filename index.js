@@ -1,5 +1,5 @@
 "use strict";
-
+let mkdir = require("./controler/mkdir");
 let getDirectory = require("./controler/getDirectory");
 let getContent = require("./controler/getContent");
 
@@ -7,10 +7,11 @@ class Book{
 	constructor(){
 	}
 	init(obj){
+		mkdir("ergou");
 		//获取目录
-		getDirectory(obj.url);
+		getDirectory(obj.url, obj.name);
 		//获取文章
-		getContent(obj.url);
+		getContent(obj.url, obj.name);
 	}
 }
 
@@ -18,6 +19,8 @@ class Book{
 // 爬陈二狗的妖孽人生
 let ergouBook = new Book();
 ergouBook.init({
+	"name":"ergou",
+	"cName":"陈二狗的妖孽人生",
 	"url": "http://www.biquku.com/2/2369/"
 });
 
