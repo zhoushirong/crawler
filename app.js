@@ -24,6 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // 设置静态文件目录
 app.use('/static/', express.static(path.join(__dirname, 'static')));
+app.use('/staticPub/', express.static(path.join(__dirname, 'staticPub')));
 
 // 初始化路由
 app.use('/', router());
