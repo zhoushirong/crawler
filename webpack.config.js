@@ -3,13 +3,19 @@
 let webpack = require('webpack');
 
 let config = {
-    entry: "./static/js/Index.js",
+    entry: {
+        index:[
+            "./static/js/Index.js"
+        ]
+    },
     module: {
         loaders: [
             {test: /\.js$/,loaders: ['babel-loader'],exclude: /node_modules/},
-            {test: /\.css$/, loader: 'style-loader!css-loader' }
+            {test: /\.css$/, loader:'style-loader!css-loader'},
+            {test: /\.woff|\.woff2|\.svg|.eot|\.ttf/,loader : 'url?prefix=font/&limit=10000'}
         ]
     },
+    devtool: 'source-map',
     output: {
         path: __dirname + "/staticPub/js",
         filename: 'bundle.js'
