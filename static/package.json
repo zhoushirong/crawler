@@ -9,7 +9,9 @@
   "author": "zhoushirong",
   "license": "MIT",
   "dependencies": {
+    "babel": "^6.5.2",
     "bootstrap": "^3.3.7",
-    "react": "^15.3.2"
+    "react": "^15.3.2",
+    "webpack": "^1.13.2"
   }
 }
