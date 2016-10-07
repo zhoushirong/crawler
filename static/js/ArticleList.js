@@ -1,18 +1,44 @@
 "use strict";
 import React, { Component } from 'react';
 import {Link} from "react-router";
+import $ from "jquery";
 
 export default class ArticleList extends React.Component {
-  render() {
-    return (
-      <div className="article_list">
-      	<ul>
-      		<li><Link to="/1012780">第1章 石景山及设计师</Link></li>
-      		<li><Link to="/1012781">第2章 石景山及设计师</Link></li>
-      		<li><Link to="/1012782">第3章 石景山及设计师</Link></li>
-      		<li><Link to="/1012783">第4章 石景山及设计师</Link></li>
-      	</ul>
-      </div>
-    )
-  }
+	constructor(){
+		super();
+		this.state = {
+			data:[]
+		};
+	}
+
+	componentDidMount(){
+		this.getArticleList();
+	}
+
+  	render() {
+	    return (
+	      <div className="article_list">
+	      	<ul>
+      		{
+            	this.state.data.map(function(item,index){
+            		return (<li key={item.num}><Link to={"/"+item.num}>{item.title}</Link></li>);
+          	  	})
+          	}
+	      	</ul>
+	      </div>
+	    )
+  	}
+
+  	getArticleList(){
+  		let _this = this;
+	    let url = "/service/list";
+	     $.ajax({
+	        url:url,
+	        type:'GET',
+	     }).done(function(result){
+	        _this.setState({
+	          data:result.data
+	        });
+	     }.bind(_this));
+     }
 }

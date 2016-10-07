@@ -5,6 +5,7 @@ let favicon = require('serve-favicon');
 let hbs = require("hbs");
 let bodyParser = require("body-parser");
 let router = require('./router');
+let service = require("./router/service");
 
 let app = express();
 
@@ -28,6 +29,7 @@ app.use('/staticPub/', express.static(path.join(__dirname, 'staticPub')));
 
 // 初始化路由
 app.use('/', router());
+app.use('/service', service());
 
 // 404页面处理
 app.use(function (req, res, next) {
