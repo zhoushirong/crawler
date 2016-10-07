@@ -31815,11 +31815,11 @@
 	        value: function render() {
 	            return _react2.default.createElement(
 	                "div",
-	                { className: "article" },
+	                { className: "article container" },
 	                _react2.default.createElement(
 	                    "h2",
 	                    null,
-	                    this.state.title
+	                    this.state.data.title
 	                ),
 	                _react2.default.createElement(
 	                    "div",

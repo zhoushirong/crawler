@@ -21,7 +21,8 @@ let ergouBook = new Book();
 ergouBook.init({
 	"name":"ergou",
 	"cName":"陈二狗的妖孽人生",
-	"url": "http://www.biquku.com/2/2369/"
+	//"url": "http://www.biquku.com/2/2369/"
+	"url":"http://www.23wx.com/html/8/8590/"
 });
 
 

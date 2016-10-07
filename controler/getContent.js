@@ -20,48 +20,66 @@ function initArgs() {
 	fictionList.forEach(function(lis) {
 		ids.push(lis.num);
 	});
-	//console.log("xxxxxxxxxx", ids, ids.length,path.join(__dirname,`../data/${bookName}/directory.json`));	
+}
+
+/**
+ * 过滤字符串
+ */
+function filter(txt) {
+	if (!txt) {
+		return "";
+	}
+	return txt.replace("\'", "").replace("\"", "").replace("<", "&lt;").replace(">", "&gt;");
 }
 
 /**
  * 循环获取文章
  */
-function getArticle(url, id) {
-	if (id) {
-		getSingleArticle(url, id);
-		return false;
-	}
+function getArticle(url) {
+	let getDir = new Crawler({
+		jQuery: jsdom,
+		maxConnections: 300,
+		forceUTF8: true
+	});
+
 	ids.forEach(function(id, index) {
 		if (index < ids.length) {
 			(function(id) {
-				getSingleArticle(url, id);
+				getSingleArticle(getDir, url, id);
 			})(id);
 		}
 	});
-};
+}
 
 /**
  * 获取单篇文章
  */
-function getSingleArticle(url, id) {
-	let getDir = new Crawler({
-		jQuery: jsdom,
-		maxConnections: 200,
-		forceUTF8: true,
-		// This will be called for each crawled page
-		callback: crawlerCallback
+function getSingleArticle(getDir, url, id) {
+	getDir.queue({
+		uri: `${url}/${id}.html`,
+		callback: function(error, result, $) {
+			crawlerCallback(error, result, $, getDir, url, id)
+		}
 	});
-
-	/*
-	 * crawler 回调
-	 */
-	function crawlerCallback(error, result, $) {
-		let content = $('#content').html();
-		//将信息写入
-		writeContent(content, path.join(__dirname, `../data/${bookName}/${id}.txt`));
-	}
-	getDir.queue(`${url}/${id}.html`);
 }
+
+/*
+ * crawler 回调
+ */
+function crawlerCallback(error, result, $, getDir, url, id) {
+	if (!$ || !result || error) {
+		//重试，重试这里没有做次数限制，如果是自动执行爬虫需要限制次数
+		getSingleArticle(getDir, url, id);
+		console.error(`id:${id} error and then retry"${error}`);
+		return false;
+	}
+	let title = filter($("#amain h1").html());
+	let content = filter($('#contents').html());
+	let data = `{"title":\"${title}\","content":\"${content}\"}`;
+	//将信息写入
+	writeContent(data, path.join(__dirname, `../data/${bookName}/${id}.txt`));
+}
+
 
 module.exports = function(url, name, id) {
 	bookName = name;

@@ -35,18 +35,24 @@ router.get("/list", function(req, res, next) {
 
 router.get("/article/:num", function(req, res, next) {
 	let id = req.params.num;
-	let article = null;
+	let content = null,
+		title = null;
 	let filePath = path.join(__dirname, `../data/ergou/${id}.txt`);
 
 	fs.readFile(filePath, 'utf-8', function(err, data) {
 		if (data) {
-			article = data;
+			if(typeof data === "string"){
+				data = JSON.parse(data);
+			}
+			content = data.content;
+			title = data.title;
 		}
+		console.log();
 		res.json({
 			"status": 1,
 			"data": {
-				title: "xx",
-				content: article
+				title: title,
+				content: content
 			},
 			serverTime: Date.now()
 		});

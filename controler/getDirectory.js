@@ -18,12 +18,12 @@ let getDir = new Crawler({
  */
 function crawlerCallback(error, result, $) {
 	let currentBook = {};
-	let urls = $('#list a');
-	currentBook.title = $('#maininfo h1').text()
+	let urls = $('#at td a');
+	currentBook.title = $('.bdsub dd h3').text()
 	currentBook.author = $('#info p').eq(0).text()
-	currentBook.update_time = $('#info p').eq(2).text()
-	currentBook.latest_chapter = $('#info p').eq(3).html()
-	currentBook.intro = $('#intro').html()
+	currentBook.update_time = "",//$('#info p').eq(2).text()
+	currentBook.latest_chapter = "",// $('#info p').eq(3).html()
+	currentBook.intro = "";//$('#intro').html()
 	currentBook.chapters = []; //保存章节信息
 
 	for (let i = 0, len = urls.length; i < len; i++) {
