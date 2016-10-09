@@ -4,8 +4,7 @@
   "description": "爬虫系统：爬这个网站的小说 http://www.biquku.com/",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "babel": "sudo babel-node ./bin/www",
+    "start": "./bin/www",
     "test": "npm test"
   },
   "repository": {
@@ -35,7 +34,10 @@
     "hbs": "^4.0.1",
     "jquery": "^3.1.1",
     "jsdom": "^9.6.0",
+    "log4js": "^0.6.38",
     "mkdirp": "^0.5.1",
+    "moment": "^2.15.1",
+    "mongoose": "^4.6.3",
     "path": "^0.12.7",
     "serve-favicon": "^2.3.0",
     "style-loader": "^0.13.1",

@@ -37,7 +37,7 @@ export default class ArticleList extends React.Component {
 	        type:'GET',
 	     }).done(function(result){
 	        _this.setState({
-	          data:result.data
+	          data:JSON.parse(result.data)
 	        });
 	     }.bind(_this));
      }

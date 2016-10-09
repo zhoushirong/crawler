@@ -5,6 +5,9 @@ let express = require('express');
 let router = express.Router();
 let directory = null;
 
+let getDirectoryData = require("../controlers/getDirectoryData");
+let getContentData = require("../controlers/getContentData");
+
 router.get("/intro", function(req, res, next) {
 	if (!directory) {
 		directory = require("../data/ergou/directory")
@@ -23,31 +26,24 @@ router.get("/intro", function(req, res, next) {
 });
 
 router.get("/list", function(req, res, next) {
-	if (!directory) {
-		directory = require("../data/ergou/directory")
-	}
-	return res.json({
-		"status": 1,
-		"data": directory.chapters,
-		serverTime: Date.now()
+	getDirectoryData(function(directoryData){
+		res.json({
+			"status": 1,
+			"data": directoryData.book_directory,
+			serverTime: Date.now()
+		});
 	});
+	
 });
 
 router.get("/article/:num", function(req, res, next) {
 	let id = req.params.num;
 	let content = null,
 		title = null;
-	let filePath = path.join(__dirname, `../data/ergou/${id}.txt`);
 
-	fs.readFile(filePath, 'utf-8', function(err, data) {
-		if (data) {
-			if(typeof data === "string"){
-				data = JSON.parse(data);
-			}
-			content = data.content;
-			title = data.title;
-		}
-		console.log();
+	getContentData(id,function(contentData) {console.log(id,contentData);
+		let title = contentData.book_content_title;
+		let content = contentData.book_content;
 		res.json({
 			"status": 1,
 			"data": {

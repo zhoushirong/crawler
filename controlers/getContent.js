@@ -2,7 +2,14 @@
 let Crawler = require("crawler");
 let jsdom = require('jsdom');
 let path = require("path");
-let writeContent = require("./writeContent");
+
+"use strict";
+let models = require("../models");
+let bookDirectoryModle = models.BookDirectory;
+
+
+//let writeContent = require("./writeContent");
+let saveContent = require("./saveContent");
 let fictionList = [];
 let bookName = null;
 let ids = [];
@@ -10,15 +17,21 @@ let ids = [];
 /**
  * 初始化文章列表
  */
-function initArgs() {
-	try {
-		fictionList = require(path.join(__dirname, `../data/${bookName}/directory.json`)).chapters;
-	} catch (e) {
-		console.error("directory json error!")
-	}
+function initArgs(url) {
+	bookDirectoryModle.findOne({"book_name": bookName}, function(err, bookDirectory){
+		if(!bookDirectory){
+			return false;
+		}
 
-	fictionList.forEach(function(lis) {
-		ids.push(lis.num);
+		fictionList = JSON.parse(bookDirectory.book_directory);
+		fictionList.forEach(function(lis) {
+			ids.push(lis.num);
+		});
+
+		if (ids.length === 0) {
+			return false;
+		}
+		getArticle(url);
 	});
 }
 
@@ -73,19 +86,20 @@ function crawlerCallback(error, result, $, getDir, url, id) {
 		console.error(`id:${id} error and then retry"${error}`);
 		return false;
 	}
-	let title = filter($("#amain h1").html());
-	let content = filter($('#contents').html());
-	let data = `{"title":\"${title}\","content":\"${content}\"}`;
+	let title = filter($("#amain h1").html()) || "";
+	let content = filter($('#contents').html()) || "";
+	let data = {
+		"num": id,
+		"title":title,
+		"content":content	
+	};
 	//将信息写入
-	writeContent(data, path.join(__dirname, `../data/${bookName}/${id}.txt`));
+	//writeContent(data, path.join(__dirname, `../data/${bookName}/${id}.txt`));
+	saveContent(data);
 }
 
 
-module.exports = function(url, name, id) {
+module.exports = function(url, name) {
 	bookName = name;
-	initArgs();
-	if (ids.length === 0) {
-		return false;
-	}
-	getArticle(url, id);
+	initArgs(url);
 }

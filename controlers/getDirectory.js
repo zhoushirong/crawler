@@ -1,7 +1,8 @@
 "use strict";
 let Crawler = require("crawler");
 let jsdom = require('jsdom');
-let writeDirectory = require("./writeDirectory");
+//let writeDirectory = require("./writeDirectory");
+let saveDirectory = require("./saveDirectory");
 let path = require("path");
 let bookName = "";
 
@@ -19,10 +20,10 @@ let getDir = new Crawler({
 function crawlerCallback(error, result, $) {
 	let currentBook = {};
 	let urls = $('#at td a');
-	currentBook.title = $('.bdsub dd h3').text()
-	currentBook.author = $('#info p').eq(0).text()
-	currentBook.update_time = "",//$('#info p').eq(2).text()
-	currentBook.latest_chapter = "",// $('#info p').eq(3).html()
+	currentBook.title = $('.bdsub dd h1').text().split(" ")[0];
+	currentBook.author = $('#info p').eq(0).text();
+	currentBook.update_time = "";//$('#info p').eq(2).text()
+	currentBook.latest_chapter = "";// $('#info p').eq(3).html()
 	currentBook.intro = "";//$('#intro').html()
 	currentBook.chapters = []; //保存章节信息
 
@@ -39,8 +40,10 @@ function crawlerCallback(error, result, $) {
 			url: _url
 		});
 	}
+
 	//将信息写入
-	writeDirectory(currentBook, path.join(__dirname, `../data/${bookName}/directory.json`));
+	//writeDirectory(currentBook, path.join(__dirname, `../data/${bookName}/directory.json`));
+	saveDirectory(currentBook);
 }
 
 module.exports = function(url, name) {
