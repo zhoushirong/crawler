@@ -36,7 +36,7 @@ export class ArticleNav extends React.Component {
   * 下一章之后默认定位到首屏
   */
   scrollToPageTop() {
-    $("body").scrollTo(0);
+    document.body.scrollTop=0;
   }
 }
 
