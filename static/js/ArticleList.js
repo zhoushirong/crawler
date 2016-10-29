@@ -18,10 +18,10 @@ export default class ArticleList extends React.Component {
   	render() {
 	    return (
 	      <div className="article_list">
-	      	<ul>
+	      	<ul className="list-unstyled row">
       		{
             	this.state.data.map(function(item,index){
-            		return (<li key={item.num}><Link to={"/"+item.num}>{item.title}</Link></li>);
+            		return (<li className="col-lg-3 col-md-4 col-sm-6 col-xs-12" key={item.num}><Link to={"/"+item.num}>{item.title}</Link></li>);
           	  	})
           	}
 	      	</ul>

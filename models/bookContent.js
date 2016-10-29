@@ -9,6 +9,8 @@ let BookContentSchema = new Schema({
 	book_content_id: {type: String},
 	book_content_title: { type: String },
 	book_content: { type: String },
+	book_content_pre: { type: Object },
+	book_content_next: { type: Object },
 	create_at: { type: Date, default: Date.now },
 	update_at: { type: Date, default: Date.now },
 });

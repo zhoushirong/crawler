@@ -8,6 +8,8 @@ class BookContent {
 		this.book_content_id = obj.num;
 		this.book_content_title = obj.title;
 		this.book_content = obj.content;
+		this.book_content_pre = obj.pre;
+		this.book_content_next = obj.next;
 	}
 }
 

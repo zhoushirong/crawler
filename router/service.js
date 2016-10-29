@@ -41,14 +41,18 @@ router.get("/article/:num", function(req, res, next) {
 	let content = null,
 		title = null;
 
-	getContentData(id,function(contentData) {console.log(id,contentData);
+	getContentData(id,function(contentData) {
 		let title = contentData.book_content_title;
 		let content = contentData.book_content;
+		let pre = contentData.book_content_pre;
+		let next = contentData.book_content_next;
 		res.json({
 			"status": 1,
 			"data": {
 				title: title,
-				content: content
+				content: content,
+				pre: pre,
+				next: next,
 			},
 			serverTime: Date.now()
 		});

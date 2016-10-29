@@ -18,8 +18,10 @@ let ids = [];
  * 初始化文章列表
  */
 function initArgs(url) {
-	bookDirectoryModle.findOne({"book_name": bookName}, function(err, bookDirectory){
-		if(!bookDirectory){
+	bookDirectoryModle.findOne({
+		"book_name": bookName
+	}, function(err, bookDirectory) {
+		if (!bookDirectory) {
 			return false;
 		}
 
@@ -88,10 +90,43 @@ function crawlerCallback(error, result, $, getDir, url, id) {
 	}
 	let title = filter($("#amain h1").html()) || "";
 	let content = filter($('#contents').html()) || "";
+	let contentNavLink = $("#footlink a");
+	
+
+	let pre = "",
+		next = "";
+	if(contentNavLink && contentNavLink.eq(0) && contentNavLink.eq(0).attr("href")){
+		pre = contentNavLink.eq(0).attr("href").replace(/.*\//ig, "") || "";
+	}
+	if(contentNavLink && contentNavLink.eq(1) && contentNavLink.eq(1).attr("href")){
+		next = contentNavLink.eq(2).attr("href").replace(/.*\//ig, "") || "";
+	}
+	let preId = "",
+		nextId = "";
+
+	if (/\.html/.test(pre)) {
+		preId = pre.replace(/\.html/ig, "");
+	}
+
+	if (/\.html/.test(next)) {
+		nextId = next.replace(/\.html/ig, "");
+	}
+
+	let preTitle = "";
+	let nextTitle = "";
 	let data = {
 		"num": id,
-		"title":title,
-		"content":content	
+		"title": title,
+		"content": content,
+		"pre": {
+			id: preId,
+			title: preTitle
+		},
+		"next": {
+			id: nextId,
+			title: nextTitle
+		}
+
 	};
 	//将信息写入
 	//writeContent(data, path.join(__dirname, `../data/${bookName}/${id}.txt`));
