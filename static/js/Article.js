@@ -9,29 +9,19 @@ export class ArticleNav extends React.Component {
   constructor(){
     super();
   }
-
-
-  getPre (){
-    if(this.props.data.pre && this.props.data.pre.num){
-      return <Link to={"/"+this.props.data.pre.num}>{this.props.data.pre.title}</Link>
-    }
-    return "";
+  componentWillMount(){
   }
-  getNext (){
-    if(this.props.data.next && this.props.data.next.num){
-      return <Link to={"/"+this.props.data.next.num}>{this.props.data.next.title}</Link>
-    }
-    return "";
+  componentDidMount(){
   }
 
   render() {
     let pre = null,
         next= null;
     if(this.props.data.pre && this.props.data.pre.id){
-      pre = <Link to={"/"+this.props.data.pre.id}>上一章{this.props.data.pre.title}</Link>
+      pre = <Link onClick={this.scrollToPageTop} to={"/"+this.props.data.pre.id}>上一章{this.props.data.pre.title}</Link>
     }
     if(this.props.data.next && this.props.data.next.id){
-      next = <Link to={"/"+this.props.data.next.id}>下一章{this.props.data.next.title}</Link>
+      next = <Link onClick={this.scrollToPageTop} to={"/"+this.props.data.next.id}>下一章{this.props.data.next.title}</Link>
     }
     return (
       <div>
@@ -41,6 +31,13 @@ export class ArticleNav extends React.Component {
       </div>
     )
   }
+
+  /*
+  * 下一章之后默认定位到首屏
+  */
+  scrollToPageTop() {
+    $("body").scrollTo(0);
+  }
 }
 
 export default class Article extends React.Component {
@@ -49,6 +46,13 @@ export default class Article extends React.Component {
         this.state = {
             data:{}
         };
+    }
+
+    componentWillReceiveProps(nextProps){
+      if(this.props.params.id !== nextProps.params.id){
+        this.props.params.id = nextProps.params.id;
+        this.getArticIntro()
+      }
     }
 
     componentDidMount(){
@@ -65,7 +69,7 @@ export default class Article extends React.Component {
     	      	</div>
             </div>
             <div className="article-nav row text-right">
-              <ArticleNav data = {this.state.data}/>
+              <ArticleNav data={this.state.data}/>
             </div>
           </div>
         )
@@ -74,7 +78,8 @@ export default class Article extends React.Component {
     //获取正文
     getArticIntro(){
         let _this = this;
-        let url = "/service/article/"+this.props.params.id;
+        let id = this.props.params.id;
+        let url = "/service/article/"+id;
          $.ajax({
             url:url,
             type:'GET',
