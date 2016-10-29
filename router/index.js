@@ -8,7 +8,7 @@ router.use(function (req, res, next) {
 
 router.get(['/','/:id'],function(req, res, next){
 	res.render("index", {
-		title:"crawler",
+		title:"iorelax",
 		data: {}
 	});
 });
