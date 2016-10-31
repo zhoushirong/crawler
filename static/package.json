@@ -4,6 +4,7 @@
   "description": "static",
   "main": "index.js",
   "scripts": {
+    "publish-mac": "export NODE_ENV=production&&webpack -p --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "zhoushirong",
