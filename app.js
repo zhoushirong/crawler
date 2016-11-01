@@ -6,6 +6,7 @@ let hbs = require("hbs");
 let bodyParser = require("body-parser");
 let router = require('./router');
 let service = require("./router/service");
+let compression = require('compression')
 
 let app = express();
 
@@ -19,6 +20,8 @@ app.engine('html', hbs.__express);
 
 // 网站tab栏图标
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
+// 启用gzip加速
+app.use(compression())
 // 解析http请求体
 app.use(bodyParser.json());
 // 解析form表单提交的数据
