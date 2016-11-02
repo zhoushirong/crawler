@@ -11,9 +11,6 @@ export default class App extends React.Component {
       <div className="container">
       	<Header />
         <Navigation />
-      	<section className="containt">
-      		大家好，我是文章内容
-      	</section>
         <Footer />
       </div>
     )

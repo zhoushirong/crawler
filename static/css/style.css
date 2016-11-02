@@ -1,3 +1,6 @@
-.fiction-nav a{
-	padding: 6px;
-}
+@charset "utf-8";
+
+@import url("./common.css");
+@import url("./index.css");
+@import url("./fictionList.css");
+@import url("./gameList.css");
