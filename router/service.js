@@ -8,24 +8,25 @@ let directory = null;
 let getDirectoryData = require("../controlers/getDirectoryData");
 let getContentData = require("../controlers/getContentData");
 
-router.get("/intro", function(req, res, next) {
-	if (!directory) {
-		directory = require("../data/ergou/directory")
-	}
-	return res.json({
-		"status": 1,
-		"data": {
-			title: directory.title,
-			author: directory.author,
-			update_time: directory.update_time,
-			latest_chapter: directory.latest_chapter,
-			intro: directory.intro
-		},
-		serverTime: Date.now()
+// 获取小说列表
+router.get("/fiction", function(req, res, next) {
+	getDirectoryData(function(directoryData){
+		res.json({
+			"status": 1,
+			"data": [{
+				title:"陈二狗的妖孽人生",
+				id:"1",
+			},{
+				title:"雪中悍刀行",
+				id:"2",
+			}],
+			serverTime: Date.now()
+		});
 	});
 });
 
-router.get("/list", function(req, res, next) {
+// 获取小说章节列表
+router.get("/fiction/:id", function(req, res, next) {
 	getDirectoryData(function(directoryData){
 		res.json({
 			"status": 1,
@@ -33,10 +34,10 @@ router.get("/list", function(req, res, next) {
 			serverTime: Date.now()
 		});
 	});
-	
 });
 
-router.get("/article/:num", function(req, res, next) {
+// 获取小说章节信息
+router.get("/fiction/:id/:num", function(req, res, next) {
 	let id = req.params.num;
 	let content = null,
 		title = null;

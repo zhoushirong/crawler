@@ -2,10 +2,9 @@
 import React, { Component } from 'react';
 import $ from "jquery";
 import {Link} from "react-router";
-import "../css/article.css";
 
 //章节内部导航
-export class ArticleNav extends React.Component {
+export class FictionNav extends React.Component {
   constructor(){
     super();
   }
@@ -40,7 +39,7 @@ export class ArticleNav extends React.Component {
   }
 }
 
-export default class Article extends React.Component {
+export default class Fiction extends React.Component {
   constructor(){
         super();
         this.state = {
@@ -51,12 +50,12 @@ export default class Article extends React.Component {
     componentWillReceiveProps(nextProps){
       if(this.props.params.id !== nextProps.params.id){
         this.props.params.id = nextProps.params.id;
-        this.getArticIntro()
+        this.getFiction()
       }
     }
 
     componentDidMount(){
-       this.getArticIntro();
+       this.getFiction();
     }
 
     render() {
@@ -68,18 +67,19 @@ export default class Article extends React.Component {
     	      		<p dangerouslySetInnerHTML={{__html:this.state.data.content}}></p>
     	      	</div>
             </div>
-            <div className="article-nav row text-right">
-              <ArticleNav data={this.state.data}/>
+            <div className="fiction-nav row text-right">
+              <FictionNav data={this.state.data}/>
             </div>
           </div>
         )
     }
 
     //获取正文
-    getArticIntro(){
+    getFiction(){
         let _this = this;
         let id = this.props.params.id;
-        let url = "/service/article/"+id;
+        let num = this.props.params.num;
+        let url = "/service/fiction/"+id+"/"+num;
          $.ajax({
             url:url,
             type:'GET',

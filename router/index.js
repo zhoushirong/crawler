@@ -6,7 +6,8 @@ router.use(function (req, res, next) {
     next();
 });
 
-router.get(['/','/:id'],function(req, res, next){
+var routeArr=['/','/fiction','/fiction/:id','/fiction/:id/:num','/game','/game/:id'];
+router.get(routeArr,function(req, res, next){
 	res.render("index", {
 		title:"iorelax",
 		data: {}
