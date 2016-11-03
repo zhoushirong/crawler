@@ -15,12 +15,12 @@ mongoose.connect(config.db, {
 });
 
 // models
-require('./book');
-require('./bookDirectory');
-require('./bookContent');
-//require('./fiction');
+require('./fictionList');
+require('./fictionDiscribe');
+require('./fictionDirectory');
+require('./fictionChapter');
 
-exports.Book = mongoose.model('Book');
-exports.BookDirectory = mongoose.model('BookDirectory');
-exports.BookContent = mongoose.model('BookContent');
-//exports.Fiction = mongoose.model('Fiction');
+exports.fictionList = mongoose.model('fictionList');
+exports.fictionDiscribe = mongoose.model('fictionDiscribe');
+exports.fictionDirectory = mongoose.model('fictionDirectory');
+exports.fictionChapter = mongoose.model('fictionChapter');
