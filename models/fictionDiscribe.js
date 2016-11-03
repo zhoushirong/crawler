@@ -1,10 +1,12 @@
 "use strict";
 
+// 书籍描述
 let mongoose  = require('mongoose');
 let Schema    = mongoose.Schema;
 let ObjectId  = Schema.ObjectId;
 
 let FictionDiscribeSchema = new Schema({
+	fiction_id: { type: ObjectId},
 	fiction_name: { type: String }, // 名称
 	fiction_author: { type: String }, // 作者
 	fiction_type: { type: String }, // 类型
