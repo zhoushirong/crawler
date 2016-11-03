@@ -2,4 +2,5 @@
 /static/node_modules
 /staticPub
 /logs
+/shell
 *.log
