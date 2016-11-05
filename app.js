@@ -6,7 +6,8 @@ let hbs = require("hbs");
 let bodyParser = require("body-parser");
 let router = require('./router');
 let service = require("./router/service");
-let compression = require('compression')
+let compression = require('compression');
+let log4js = require('log4js');
 
 let app = express();
 
@@ -30,6 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/static/', express.static(path.join(__dirname, 'static')));
 app.use('/staticPub/', express.static(path.join(__dirname, 'staticPub')));
 
+app.use(log4js.connectLogger(log4js.getLogger('access')));
 // 初始化路由
 app.use('/', router());
 app.use('/service', service());

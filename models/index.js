@@ -1,7 +1,7 @@
 "use strict";
-var mongoose = require('mongoose');
-var config = require('../config');
-var logger = require('../common/logger')
+let mongoose = require('mongoose');
+let config = require('../config');
+let logger = require('../common/logger')
 
 mongoose.connect(config.db, {
 	server: {
@@ -15,12 +15,12 @@ mongoose.connect(config.db, {
 });
 
 // models
-require('./fictionList');
-require('./fictionDiscribe');
-require('./fictionDirectory');
-require('./fictionChapter');
+require('./book');
+require('./bookDiscribe');
+require('./BookDirectory');
+require('./bookChapter');
 
-exports.fictionList = mongoose.model('fictionList');
-exports.fictionDiscribe = mongoose.model('fictionDiscribe');
-exports.fictionDirectory = mongoose.model('fictionDirectory');
-exports.fictionChapter = mongoose.model('fictionChapter');
+exports.Book = mongoose.model('Book');
+exports.BookDiscribe = mongoose.model('BookDiscribe');
+exports.BookDirectory = mongoose.model('BookDirectory');
+exports.BookChapter = mongoose.model('BookChapter');

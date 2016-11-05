@@ -1,16 +1,15 @@
 "use strict";
+
 let Crawler = require("crawler");
 let jsdom = require('jsdom');
-let path = require("path");
 
-"use strict";
 let models = require("../models");
+let logger = require("../common/logger");
+
+let bookModle = models.Book;
 let bookDirectoryModle = models.BookDirectory;
+let bookChapterModle = models.BookChapter;
 
-
-//let writeContent = require("./writeContent");
-let saveContent = require("./saveContent");
-let fictionList = [];
 let bookName = null;
 let ids = [];
 
@@ -25,8 +24,8 @@ function initArgs(url) {
 			return false;
 		}
 
-		fictionList = JSON.parse(bookDirectory.book_directory);
-		fictionList.forEach(function(lis) {
+		let bookChapters = bookDirectory.book_chapters;
+		bookChapters.forEach(function(lis) {
 			ids.push(lis.num);
 		});
 
@@ -85,20 +84,19 @@ function crawlerCallback(error, result, $, getDir, url, id) {
 	if (!$ || !result || error) {
 		//重试，重试这里没有做次数限制，如果是自动执行爬虫需要限制次数
 		getSingleArticle(getDir, url, id);
-		console.error(`id:${id} error and then retry"${error}`);
+		logger.error(`id:${id} error and then retry"${error}`);
 		return false;
 	}
 	let title = filter($("#amain h1").html()) || "";
 	let content = filter($('#contents').html()) || "";
 	let contentNavLink = $("#footlink a");
-	
 
 	let pre = "",
 		next = "";
-	if(contentNavLink && contentNavLink.eq(0) && contentNavLink.eq(0).attr("href")){
+	if (contentNavLink && contentNavLink.eq(0) && contentNavLink.eq(0).attr("href")) {
 		pre = contentNavLink.eq(0).attr("href").replace(/.*\//ig, "") || "";
 	}
-	if(contentNavLink && contentNavLink.eq(1) && contentNavLink.eq(1).attr("href")){
+	if (contentNavLink && contentNavLink.eq(1) && contentNavLink.eq(1).attr("href")) {
 		next = contentNavLink.eq(2).attr("href").replace(/.*\//ig, "") || "";
 	}
 	let preId = "",
@@ -128,13 +126,72 @@ function crawlerCallback(error, result, $, getDir, url, id) {
 		}
 
 	};
-	//将信息写入
-	//writeContent(data, path.join(__dirname, `../data/${bookName}/${id}.txt`));
-	saveContent(data);
+	saveBookChapter(data);
 }
 
 
-module.exports = function(url, name) {
+/**
+ * 创建书本
+ */
+let createBookChapter = (bookChapterObj) => {
+	let bookChapterEntity = new bookChapterModle(bookChapterObj);
+	bookChapterEntity.save();
+}
+
+/**
+ * 更新数据库中的书籍内容
+ */
+let updateBookChapter = (oldObj, obj) => {
+	for (let i in obj) {
+		oldObj[i] = obj[i];
+	}
+	oldObj.save();
+}
+
+class BookChapter {
+	constructor(obj) {
+		this.book_chapter_number = obj.num;
+		this.book_chapter_name = obj.title;
+		this.book_chapter_content = obj.content;
+		this.book_chapter_previous = obj.pre;
+		this.book_chapter_next = obj.next;
+	}
+}
+
+function saveBookChapter(obj) {
+	(function(obj) {
+		let bookChapter = new BookChapter(obj);
+		if (!bookChapter.book_chapter_number) {
+			return false;
+		}
+		bookChapterModle.findOne({
+			"book_chapter_number": bookChapter.book_chapter_number
+		}, function(err, oldBookChapter) {
+			if (!oldBookChapter) {
+				createBookChapter(bookChapter);
+				logger.info(`create ${bookChapter.book_chapter_number} chapter ok!`);
+			} else {
+				updateBookChapter(oldBookChapter, bookChapter);
+				logger.info(`update ${bookChapter.book_chapter_number} chapter ok!`);
+			}
+		});
+	})(obj);
+};
+
+
+
+module.exports = function(name) {
 	bookName = name;
-	initArgs(url);
+	bookModle.findOne({
+		"book_name": name
+	}, function(err, book) {
+		if (book) {
+			let url = book.book_source;
+			initArgs(url);
+			logger.info(`start to create the chapters of the book ${name}`);
+		} else {
+			logger.info(`the book ${name} is not exsit! you can try create it`);
+		}
+	});
+
 }

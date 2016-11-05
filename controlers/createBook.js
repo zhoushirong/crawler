@@ -1,5 +1,6 @@
 "use strict";
 let models = require("../models");
+let logger = require("../common/logger");
 let bookModle = models.Book;
 
 
@@ -12,25 +13,37 @@ class Book {
 }
 
 /**
-* 创建书本
+* 将书本存入数据库
 */
-let createBook = (bookObj) => {
-	let bookEntity = new bookModle(bookObj);
+let createBook = (obj) => {
+	let bookEntity = new bookModle(obj);
 	bookEntity.save();
 }
 
+/**
+* 更新数据库中的书籍
+*/
+let updateBook = (oldObj, obj) => {
+	for(let i in obj) {
+		oldObj[i] = obj[i];
+	}
+	oldObj.save();
+}
+
+/**
+* 创建一本书
+*/
 module.exports = function (obj) {
 	var book = new Book(obj);
 	bookModle.findOne({"book_name": book.book_name}, function(err, oldBook){
 		if(!oldBook){
 			createBook(book);
-			console.info("create new book ok");
+			logger.info(`create new book ${book.book_name} success!`);
 			return false;
+		} else {
+			updateBook(oldBook, book);
+			logger.info(`update book ${book.book_name} success!`);
 		}
-
-		oldBook.book_name = book.book_name+"5";
-		oldBook.save(() => {console.log("update old book ok!");});
 	});
 
-	console.log("save success!");
 };

@@ -7,18 +7,18 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../css/style.css'
 
 import App from "./App";
-import FictionList from "./FictionList";
-import Fiction from "./Fiction";
-import FictionChapters from "./FictionChapters";
+import BookList from "./BookList";
+import Book from "./Book";
+import BookChapters from "./BookChapters";
 import GameList from "./GameList";
 import Game from "./Game";
 
 render((
 	<Router history={browserHistory}>
 		<Route path="/" component={App}></Route>
-	  <Route path="/fiction" component={FictionList}></Route>
-		<Route path="/fiction/:id" component={FictionChapters}></Route>
-    <Route path="/fiction/:id/:num" component={Fiction}></Route>
+	  <Route path="/book" component={BookList}></Route>
+		<Route path="/book/:id" component={BookChapters}></Route>
+    <Route path="/book/:id/:num" component={Book}></Route>
     <Route path="/game" component={GameList}></Route>
     <Route path="/game/:id" component={Game}></Route>
   </Router>

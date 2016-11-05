@@ -1,8 +1,8 @@
 @charset "utf-8";
-.fiction-list {
+.book-list {
 	text-align: center;
 }
-.fiction-list li{
+.book-list li{
 	display:inline-block;
 	width:128px;
 	height:156px;
@@ -11,10 +11,10 @@
 	overflow: hidden;
 	background: #598;
 }
-.fiction-list li:nth-child(1) {
+.book-list li:nth-child(1) {
 	background:#958;
 }
-.fiction-list li a{
+.book-list li a{
 	display: block;
 	text-align: center;
 	margin-top: 50%;
