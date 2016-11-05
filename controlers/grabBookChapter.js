@@ -178,8 +178,6 @@ function saveBookChapter(obj) {
 	})(obj);
 };
 
-
-
 module.exports = function(name) {
 	bookName = name;
 	bookModle.findOne({

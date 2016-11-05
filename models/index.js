@@ -17,7 +17,7 @@ mongoose.connect(config.db, {
 // models
 require('./book');
 require('./bookDiscribe');
-require('./BookDirectory');
+require('./bookDirectory');
 require('./bookChapter');
 
 exports.Book = mongoose.model('Book');

@@ -51,8 +51,8 @@ export default class Book extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if(this.props.params.id !== nextProps.params.id){
-      this.props.params.id = nextProps.params.id;
+    if(this.props.params.num !== nextProps.params.num){
+      this.props.params.num = nextProps.params.num;
       this.getBook()
     }
   }
