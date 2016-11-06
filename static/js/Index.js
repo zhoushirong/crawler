@@ -20,7 +20,6 @@ render((
 		<Route path="/book/:id" component={BookChapters}></Route>
     <Route path="/book/:id/:num" component={Book}></Route>
     <Route path="/game" component={GameList}></Route>
-    <Route path="/game/:id" component={Game}></Route>
   </Router>
 ),document.getElementById('main'));
 

@@ -17,7 +17,6 @@ export default class Fiction extends React.Component {
     render() {
         return (
           <div className="container">
-            大家好我是小游戏，我的ID是{this.props.params.id}
           </div>
         )
     }

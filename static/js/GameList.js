@@ -1,15 +1,45 @@
 "use strict";
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import {Link} from "react-router";
+import $ from "jquery";
+
 
 export default class GameList extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      data:[]
+    }
+  }
+  componentDidMount(){
+    this.getGameList();
+  }
+
+  getGameList(){
+    let _this = this;
+    let url = "/service/game";
+     $.ajax({
+        url:url,
+        type:'GET',
+     }).done(function(result){
+        _this.setState({
+          data:result.data
+        });
+     }.bind(_this));
+   }
+
   render() {
     return (
         <div className="container">
         	<nav className="game-list list-unstyled">
-           <li><Link to="/game/1">小游戏一</Link> </li>
-           <li><Link to="/game/2">小游戏二</Link> </li>
-           <li><Link to="/game/3">小游戏三</Link> </li>
+           {
+            this.state.data.map(function(item,index){
+              return (
+                <li>
+                  <Link to={"/game/"+item.id}>{item.title}</Link>
+                </li>);
+              })
+           }
           </nav>
         </div>
     )
