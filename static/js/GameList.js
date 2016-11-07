@@ -36,7 +36,9 @@ export default class GameList extends React.Component {
             this.state.data.map(function(item,index){
               return (
                 <li>
-                  <Link to={"/game/"+item.id}>{item.title}</Link>
+                  <Link to={"/game/"+item.id}></Link>
+                  <span>{item.title}</span>
+                  <em></em>
                 </li>);
               })
            }

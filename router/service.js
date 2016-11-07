@@ -45,7 +45,6 @@ router.get("/book/:id/:num", function(req, res, next) {
 	let num = req.params.num;
 	let content = null,
 		title = null;
-
 	getBookChapter(id, num, function(contentData) {
 		let title = contentData.book_chapter_name;
 		let content = contentData.book_chapter_content;

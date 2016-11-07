@@ -23,7 +23,9 @@ export default class BookList extends React.Component {
             this.state.data.map(function(item,index){
               return (
                 <li>
-                  <Link to={"/book/"+item.id}>{item.title}</Link>
+                  <Link to={"/book/"+item.id}>
+                    <span className="vertical-center">{item.title}</span>
+                  </Link>
                 </li>);
               })
           }
