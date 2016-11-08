@@ -31,12 +31,13 @@ export default class GameList extends React.Component {
   render() {
     return (
         <div className="container">
-        	<nav className="game-list list-unstyled">
+          <nav className="game-list list-unstyled">
            {
             this.state.data.map(function(item,index){
+              let url = `/game/${item.id}`;
               return (
                 <li>
-                  <Link to={"/game/"+item.id}></Link>
+                  <a href={url} target="_blank"></a>
                   <span>{item.title}</span>
                   <em></em>
                 </li>);

@@ -9,13 +9,12 @@ var pathToRedux = path.resolve(node_modules, 'redux/dist/redux.min.js');
 
 let config = {
     entry: {
-        index: [
-            "./static/js/Index.js"
-        ]
+        index: ["./static/js/Index.js"],
+        game1: "./static/js/game/game1.js"
     },
     output: {
         path: path.resolve(__dirname, "./staticPub/js"),
-        filename: 'bundle.js'
+        filename: "[name].entry.js"
     },
 
     module: {
