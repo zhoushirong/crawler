@@ -6,14 +6,18 @@ var node_modules = path.resolve(__dirname, './static/node_modules');
 var pathToReact = path.resolve(node_modules, 'react/dist/react.min.js');
 var pathToReactDom = path.resolve(node_modules, 'react-dom/dist/react-dom.min.js');
 var pathToRedux = path.resolve(node_modules, 'redux/dist/redux.min.js');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 let config = {
+    context: path.join(__dirname, './'),
     entry: {
         index: ["./static/js/Index.js"],
-        game1: "./static/js/game/game1.js"
+        game1: "./static/js/game/Game1.js",
+        game2: "./static/js/game/Game2.js"
     },
     output: {
         path: path.resolve(__dirname, "./staticPub/js"),
+        //filename: "[name][hash].entry.js"
         filename: "[name].entry.js"
     },
 
@@ -22,13 +26,13 @@ let config = {
         loaders: [{
             test: /\.js$/,
             loaders: ['babel-loader'],
-            exclude: /node_modules/
+            exclude: /node_modules/,
         }, {
             test: /\.css$/,
-            loader: 'style-loader!css-loader'
+            loader: 'style-loader!css-loader',
         }, {
             test: /\.woff|\.woff2|\.svg|.eot|\.ttf/,
-            loader: 'url?prefix=font/&limit=10000'
+            loader: 'url?prefix=font/&limit=10000',
         }]
     },
     devtool: 'source-map',
@@ -45,9 +49,19 @@ let config = {
             'process.env': {
                 NODE_ENV: JSON.stringify("production")
             }
-        })
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "common",
+            filename: "common.js",
+            chunks: ['index', 'game1', 'game2']
+        }),
+        new CopyWebpackPlugin([
+            {from: "node_modules/jquery/dist/jquery.min.js"}
+        ]),
     ],
-
+    externals: {
+        jquery:  'jQuery',
+    },
     resolve: {
         //定义了解析模块路径时的配置，常用的就是extensions，可以用来指定模块的后缀，这样在引入模块时就不需要写后缀了，会自动补全
         extensions: ['', '.js', '.jsx', 'es6', "css", "scss", "png", "jpg", "jpeg"],
