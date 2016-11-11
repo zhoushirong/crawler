@@ -18,6 +18,8 @@ app.set('view engine', 'html');
 // 使用handlebars模板引擎
 hbs = hbs.create();
 app.engine('html', hbs.__express);
+// 使用handlebars模板引擎的模块功能
+hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 // 网站tab栏图标
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
