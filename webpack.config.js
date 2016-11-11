@@ -8,16 +8,20 @@ var pathToReactDom = path.resolve(node_modules, 'react-dom/dist/react-dom.min.js
 var pathToRedux = path.resolve(node_modules, 'redux/dist/redux.min.js');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
-let config = {
-    context: path.join(__dirname, './'),
-    entry: {
+function getEntry() {
+    return {
         index: ["./static/js/Index.js"],
         game1: "./static/js/game/Game1.js",
         game2: "./static/js/game/Game2.js"
-    },
+    }
+}
+
+let config = {
+    devtool: 'source-map',
+    context: path.join(__dirname, './'),
+    entry: getEntry(),
     output: {
         path: path.resolve(__dirname, "./staticPub/js"),
-        //filename: "[name][hash].entry.js"
         filename: "[name].entry.js"
     },
 
@@ -35,7 +39,7 @@ let config = {
             loader: 'url?prefix=font/&limit=10000',
         }]
     },
-    devtool: 'source-map',
+    
     //devtool: false,
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
@@ -53,7 +57,12 @@ let config = {
         new webpack.optimize.CommonsChunkPlugin({
             name: "common",
             filename: "common.js",
-            chunks: ['index', 'game1', 'game2']
+            chunks: ['index']
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "common",
+            filename: "gameCommon.js",
+            chunks: ['game1', 'game2']
         }),
         new CopyWebpackPlugin([
             {from: "node_modules/jquery/dist/jquery.min.js"}
