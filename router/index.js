@@ -10,6 +10,8 @@ var routeArr=['/','/book','/book/:id','/book/:id/:num','/game'];
 router.get(routeArr,function(req, res, next){
 	res.render("index", {
 		title:"欢乐社区",
+		pageKeywords: "欢乐社区,开心一刻,开心一下,烽火戏诸侯,陈二狗的妖孽人生,雪中悍刀行",
+		pageDescription: "大爷，来玩啊~~！",
 		data: {}
 	});
 });
