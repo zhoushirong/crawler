@@ -5,9 +5,9 @@ let express = require('express');
 let router = express.Router();
 let directory = null;
 
-let getBook = require("../controlers/getBook");
-let getBookDirectory = require("../controlers/getBookDirectory");
-let getBookChapter = require("../controlers/getBookChapter");
+let getBook = require("../controlers").getBook;
+let getBookDirectory = require("../controlers").getBookDirectory;
+let getBookChapter = require("../controlers").getBookChapter;
 
 // 获取文章列表
 router.get("/book", function(req, res, next) {
