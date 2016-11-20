@@ -1,6 +1,6 @@
 "use strict";
-let models = require("../models");
-let logger = require("../common/logger");
+let models = require("../../models");
+let logger = require("../../common/logger");
 let bookModle = models.Book;
 
 

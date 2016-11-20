@@ -3,8 +3,8 @@
 let Crawler = require("crawler");
 let jsdom = require('jsdom');
 
-let models = require("../models");
-let logger = require("../common/logger");
+let models = require("../../models");
+let logger = require("../../common/logger");
 
 let bookModle = models.Book;
 let bookDirectoryModle = models.BookDirectory;

@@ -3,7 +3,7 @@
 * 获取数据
 */
 
-let models = require("../models");
+let models = require("../../models");
 let grabBookOneChapter = require("./grabBookOneChapter");
 let bookChapterModle = models.BookChapter;
 

@@ -1,7 +1,7 @@
 "use strict";
 let mongoose = require('mongoose');
-let config = require('../config');
-let logger = require('../common/logger')
+let config = require('../../config').mongoConfig;
+let logger = require('../../common/logger')
 
 mongoose.connect(config.db, {
 	server: {
