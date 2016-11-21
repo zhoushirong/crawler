@@ -1,18 +1,33 @@
-use testdb;
 
-create table students4
-(
+create database if not exists crawer character set utf8;	
+
+use crawer;
+
+create table if not exists book(
 	id int unsigned not null auto_increment primary key,
-	name char(8) not null,
-	sex char(4) not null,
-	age tinyint unsigned not null,
-	tel char(13) null default "-"
-);
-create table book2
-(
+	book_name varchar(100) default null,
+	book_author varchar(30) null,
+	chapter_num int null,
+	discripe varchar(100) null,
+	book_source varchar(50) null
+) engine=innodb default charset=utf8;
+
+create table if not exists bookDirectory (
 	id int unsigned not null auto_increment primary key,
-	title char(100) not null,
-	author char(50) not null,
-	size tinyint unsigned not null,
-	discripe char(13) null
-);
+	book_name varchar(100) null,
+	book_chapters varchar(50) null
+) engine=InnoDB default charset=utf8;
+
+create table if not exists bookChapter (
+	id int unsigned not null auto_increment primary key,
+	book_name varchar(100) null,
+	book_author varchar(30) null,
+	book_type varchar(50) null,
+	book_cover varchar(50) null,
+	book_last_chapter varchar(100) null,
+	book_chapter_amount int null,
+	book_bytes int null,
+	book_create_at date null,
+	book_last_update date null
+) engine=InnoDB default charset=utf8;
+

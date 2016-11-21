@@ -5,7 +5,7 @@ let mongoConfig = {
 	port: 3306,
 	user: 'root',
 	password: '123456',
-	dbname: "crawler";
+	dbname: "crawler"
 };
 
 if (process.env.NODE_ENV === 'development') {
@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
 		port: 3306,
 		user: 'root',
 		password: '123456',
-		dbname: "crawler";
+		dbname: "crawler"
 	};
 }
 
