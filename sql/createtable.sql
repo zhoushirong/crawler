@@ -1,33 +1,29 @@
 
-create database if not exists crawer character set utf8;	
+create database if not exists crawler character set utf8;	
 
-use crawer;
+use crawler;
 
 create table if not exists book(
 	id int unsigned not null auto_increment primary key,
 	book_name varchar(100) default null,
 	book_author varchar(30) null,
 	chapter_num int null,
-	discripe varchar(100) null,
+	discripe char(255) null,
 	book_source varchar(50) null
 ) engine=innodb default charset=utf8;
 
 create table if not exists bookDirectory (
 	id int unsigned not null auto_increment primary key,
 	book_name varchar(100) null,
-	book_chapters varchar(50) null
+	book_chapters text null
 ) engine=InnoDB default charset=utf8;
 
 create table if not exists bookChapter (
 	id int unsigned not null auto_increment primary key,
 	book_name varchar(100) null,
-	book_author varchar(30) null,
-	book_type varchar(50) null,
-	book_cover varchar(50) null,
-	book_last_chapter varchar(100) null,
-	book_chapter_amount int null,
-	book_bytes int null,
-	book_create_at date null,
-	book_last_update date null
+	book_chapter_number int null,
+	book_chapter_name varchar(100) null,
+	book_chapter_content mediumtext null,
+	book_chapter_previous varchar(100) null,
+	book_chapter_next varchar(100) null
 ) engine=InnoDB default charset=utf8;
-

@@ -17,24 +17,6 @@ class BookDirectory {
 	}
 }
 
-/**
- * 创建书本目录
- */
-let createBookDirectory = (bookDirectoryObj) => {
-	let bookDirectoryEntity = new bookDirectoryModle(bookDirectoryObj);
-	bookDirectoryEntity.save();
-}
-
-/**
-* 更新数据库中的书籍目录
-*/
-let updateBookDirectory = (oldObj, obj) => {
-	for(let i in obj) {
-		oldObj[i] = obj[i];
-	}
-	oldObj.save();
-}
-
 /*
  * 抓取回调
  */
@@ -63,15 +45,15 @@ function crawlerCallback(error, result, $) {
  */
 function saveDirectory(obj) {
 	let bookDirectory = new BookDirectory(obj);
-	bookDirectoryModle.findOne({
+	bookDirectoryModle.searchBookDirectory({
 		"book_name": bookDirectory.book_name
-	}, function(err, oldBookDirectory) {
-		if (!oldBookDirectory) {
-			createBookDirectory(bookDirectory);
+	}, function(oldBookDirectory) {
+		if (!oldBookDirectory.length) {
+			bookDirectoryModle.createBookDirectory(bookDirectory);
 			logger.info(`create ${bookDirectory.book_name} directory ok!`);
 			return false;
 		} else {
-			updateBookDirectory(oldBookDirectory, bookDirectory);
+			bookDirectoryModle.updateBookDirectory(oldBookDirectory[0], bookDirectory);
 			logger.info(`update ${bookDirectory.book_name} directory ok!`);
 		}
 	});
@@ -82,11 +64,11 @@ function saveDirectory(obj) {
  */
 module.exports = function(name) {
 	bookName = name;
-	bookModle.findOne({
+	bookModle.searchBook({
 		"book_name": name
-	}, function(err, book) {
-		if (book) {
-			let url = book.book_source;
+	}, function(book) {
+		if (book.length) {
+			let url = book[0].book_source;
 			let getDir = new Crawler({
 				jQuery: jsdom,
 				maxConnections: 100,
