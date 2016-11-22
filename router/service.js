@@ -12,10 +12,12 @@ let getBookChapter = require("../controlers").getBookChapter;
 // 获取文章列表
 router.get("/book", function(req, res, next) {
 	getBook(function(directoryData) {
+		directoryData = [directoryData];
+
 		let arr = [];
 		directoryData.forEach(function(tag, i) {
 			let obj = {};
-			obj.id = tag._id;
+			obj.id = tag.id;
 			obj.title = tag.book_name;
 			arr.push(obj);
 		});
@@ -33,7 +35,7 @@ router.get("/book/:id", function(req, res, next) {
 	getBookDirectory(id, function(directoryData) {
 		res.json({
 			"status": 1,
-			"data": directoryData.book_chapters,
+			"data": JSON.parse(directoryData.book_chapters),
 			serverTime: Date.now()
 		});
 	});
@@ -45,7 +47,7 @@ router.get("/book/:id/:num", function(req, res, next) {
 	let num = req.params.num;
 	let content = null,
 		title = null;
-	getBookChapter(id, num, function(contentData) {
+	getBookChapter(id, num, function(contentData) {console.log(id, num , 'haahhahaha');
 		let title = contentData.book_chapter_name;
 		let content = contentData.book_chapter_content;
 		let pre = contentData.book_chapter_previous;

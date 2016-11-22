@@ -26,7 +26,6 @@ function initArgs(url) {
 		}
 
 		let bookChapters = JSON.parse(bookDirectory[0].book_chapters);
-		bookChapters.length = 3; // test............
 		bookChapters.forEach(function(lis) {
 			ids.push(lis.num);
 		});

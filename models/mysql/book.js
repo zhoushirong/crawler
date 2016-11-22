@@ -50,8 +50,33 @@ function searchBook(obj, callback) {
 	});
 }
 
+function searchBookById(id, callback) {
+	let sql = `SELECT * FROM ${BOOK_TABLE} WHERE id=${connection.escape(id)}`;
+	connection.query(sql, function(err, row, field) {
+		if (err) {
+			throw err;
+		}
+		callback && callback(row);
+	});
+}
+
+function searchAllBook(callback) {
+	let sql = `SELECT * FROM ${BOOK_TABLE}`;
+	connection.query(sql, function(err, row, field) {
+		if (err) {
+			throw err;
+		}
+		callback && callback(row);
+	})
+} 
+
 
 exports.createBook = createBook;
 exports.updateBook = updateBook;
 exports.deleteBook = deleteBook;
 exports.searchBook = searchBook;
+exports.searchAllBook = searchAllBook;
+exports.searchBookById = searchBookById;
+
+
+

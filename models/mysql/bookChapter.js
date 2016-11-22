@@ -33,7 +33,7 @@ function createBookChapter(obj, callback) {
 
 
 function updateBookChapter(obj, callback) {
-	let sql = `UPDATE ${BOOK_TABLE} SET book_chapter_content = ${connection.escape(obj.book_chapter_content)} WHERE book_chapter_name = ${connection.escape(obj.book_chapter_name)})`;
+	let sql = `UPDATE ${BOOK_TABLE} SET book_chapter_content = ${connection.escape(obj.book_chapter_content)} WHERE book_chapter_name = ${connection.escape(obj.book_chapter_name)}`;
 	connection.query(sql, function(err, result) {
 		if (err) {
 			throw err;
@@ -57,7 +57,23 @@ function searchBookChapter(obj, callback) {
 	});
 }
 
+function searchBookChapterByChapterNum(book_chapter_number, callback) {
+	let sql = `SELECT * FROM ${BOOK_TABLE} WHERE book_chapter_number = ${connection.escape(book_chapter_number)}`;
+	connection.query(sql, function(err, result) {
+		if (err) {
+			throw err;
+		}
+		if (result) {
+			callback && callback(result);
+		}
+	});
+}
+
 
 exports.createBookChapter = createBookChapter;
 exports.searchBookChapter = searchBookChapter;
 exports.updateBookChapter = updateBookChapter;
+exports.searchBookChapterByChapterNum = searchBookChapterByChapterNum;
+
+
+

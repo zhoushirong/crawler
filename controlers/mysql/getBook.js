@@ -1,16 +1,17 @@
 "use strict";
+"use strict";
+let models = require("../../models");
+let logger = require("../../common/logger");
+let searchAllBook = models.Book.searchAllBook;
 /**
 * 获取数据
 */
 
-let models = require("../../models");
-let bookModle = models.Book;
-
-module.exports = function(callback) {console.log(1);
-	bookModle.find("*", function(err, bookList) {console.log(2,bookList);
-		if (!bookList) {
+module.exports = function(callback) {
+	searchAllBook(function(bookList) {
+		if (!bookList.length) {
 			bookList = "{}";
 		}
-		callback && callback(bookList);
+		callback && callback(bookList[0]);
 	});
 };
