@@ -15,3 +15,4 @@
 
 exports.Book = require("./mysql/book");
 exports.BookDirectory = require("./mysql/bookDirectory");
+exports.BookChapter = require("./mysql/BookChapter");

@@ -1,18 +1,63 @@
 "use strict";
 
-// 书籍章节
-let mongoose  = require('mongoose');
-let Schema    = mongoose.Schema;
-let ObjectId  = Schema.ObjectId;
+let mysql = require('mysql');
+let config = require('../../config').mysqlConfig;
 
-let BookChapterSchema = new Schema({
-	book_id: { type: ObjectId},
-	book_chapter_number: {type: String}, // 章节id
-	book_chapter_name: { type: String }, // 章节名称
-	book_chapter_content: { type: String }, // 章节内容
-	book_chapter_previous: { type: Object }, // 上一章节基本信息
-	book_chapter_next: { type: Object }, // 下一章节基本信息
+let connection = mysql.createConnection({
+	host: config.host,
+	port: config.port,
+	user: config.user,
+	password: config.password,
+	database: config.dbname,
 });
+let BOOK_TABLE = "bookChapter";
+
+function createBookChapter(obj, callback) {
+	let sql = `INSERT INTO ${BOOK_TABLE} VALUES (
+		0,
+		${connection.escape(obj.book_chapter_number)},
+		${connection.escape(obj.book_chapter_name)},
+		${connection.escape(obj.book_chapter_content)},
+		${connection.escape(JSON.stringify(obj.book_chapter_previous))}, 
+		${connection.escape(JSON.stringify(obj.book_chapter_next))}
+	)`;
+	connection.query(sql, function(err, result) {
+		if (err) {
+			throw err;
+		}
+		if (result) {
+			callback && callback();
+		}
+	});
+}
 
 
-mongoose.model('BookChapter', BookChapterSchema);
+function updateBookChapter(obj, callback) {
+	let sql = `UPDATE ${BOOK_TABLE} SET book_chapter_content = ${connection.escape(obj.book_chapter_content)} WHERE book_chapter_name = ${connection.escape(obj.book_chapter_name)})`;
+	connection.query(sql, function(err, result) {
+		if (err) {
+			throw err;
+		}
+		if (result) {
+			callback && callback();
+		}
+	});
+}
+
+
+function searchBookChapter(obj, callback) {
+	let sql = `SELECT * FROM ${BOOK_TABLE} WHERE book_chapter_name = ${connection.escape(obj.book_chapter_name)}`;
+	connection.query(sql, function(err, result) {
+		if (err) {
+			throw err;
+		}
+		if (result) {
+			callback && callback(result);
+		}
+	});
+}
+
+
+exports.createBookChapter = createBookChapter;
+exports.searchBookChapter = searchBookChapter;
+exports.updateBookChapter = updateBookChapter;

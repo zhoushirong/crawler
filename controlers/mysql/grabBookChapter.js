@@ -17,14 +17,16 @@ let ids = [];
  * 初始化文章列表
  */
 function initArgs(url) {
-	bookDirectoryModle.findOne({
+	bookDirectoryModle.searchBookDirectory({
 		"book_name": bookName
-	}, function(err, bookDirectory) {
-		if (!bookDirectory) {
+	}, function(bookDirectory) {
+		if (!bookDirectory.length) {
+			logger.error(`can't find bookDirectory of ${bookName}, please create it!`);
 			return false;
 		}
 
-		let bookChapters = bookDirectory.book_chapters;
+		let bookChapters = JSON.parse(bookDirectory[0].book_chapters);
+		bookChapters.length = 3; // test............
 		bookChapters.forEach(function(lis) {
 			ids.push(lis.num);
 		});
@@ -129,25 +131,6 @@ function crawlerCallback(error, result, $, getDir, url, id) {
 	saveBookChapter(data);
 }
 
-
-/**
- * 创建书本
- */
-let createBookChapter = (bookChapterObj) => {
-	let bookChapterEntity = new bookChapterModle(bookChapterObj);
-	bookChapterEntity.save();
-}
-
-/**
- * 更新数据库中的书籍内容
- */
-let updateBookChapter = (oldObj, obj) => {
-	for (let i in obj) {
-		oldObj[i] = obj[i];
-	}
-	oldObj.save();
-}
-
 class BookChapter {
 	constructor(obj) {
 		this.book_chapter_number = obj.num;
@@ -164,14 +147,14 @@ function saveBookChapter(obj) {
 		if (!bookChapter.book_chapter_number) {
 			return false;
 		}
-		bookChapterModle.findOne({
+		bookChapterModle.searchBookChapter({
 			"book_chapter_number": bookChapter.book_chapter_number
-		}, function(err, oldBookChapter) {
-			if (!oldBookChapter) {
-				createBookChapter(bookChapter);
+		}, function(oldBookChapter) {
+			if (!oldBookChapter.length) {
+				bookChapterModle.createBookChapter(bookChapter);
 				logger.info(`create ${bookChapter.book_chapter_number} chapter ok!`);
 			} else {
-				updateBookChapter(oldBookChapter, bookChapter);
+				bookChapterModle.updateBookChapter(oldBookChapter[0], bookChapter);
 				logger.info(`update ${bookChapter.book_chapter_number} chapter ok!`);
 			}
 		});
@@ -180,11 +163,11 @@ function saveBookChapter(obj) {
 
 module.exports = function(name) {
 	bookName = name;
-	bookModle.findOne({
+	bookModle.searchBook({
 		"book_name": name
-	}, function(err, book) {
-		if (book) {
-			let url = book.book_source;
+	}, function(book) {
+		if (book.length) {
+			let url = book[0].book_source;
 			initArgs(url);
 			logger.info(`start to create the chapters of the book ${name}`);
 		} else {
