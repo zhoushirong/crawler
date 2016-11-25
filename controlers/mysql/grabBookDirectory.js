@@ -31,7 +31,6 @@ function crawlerCallback(error, result, $) {
 		let _url = $(url).attr('href') + "";
 		let num = _url.replace('.html', ''); //得到章节id，查询内容页的时候使用
 		let title = $(url).text();
-
 		currentBook.chapters.push({
 			num: num,
 			title: title,
@@ -49,12 +48,13 @@ function saveDirectory(obj) {
 		"book_name": bookDirectory.book_name
 	}, function(oldBookDirectory) {
 		if (!oldBookDirectory.length) {
-			bookDirectoryModle.createBookDirectory(bookDirectory);
-			logger.info(`create ${bookDirectory.book_name} directory ok!`);
-			return false;
+			bookDirectoryModle.createBookDirectory(bookDirectory, function() {
+				logger.info(`create ${bookDirectory.book_name} directory ok!`);	
+			});
 		} else {
-			bookDirectoryModle.updateBookDirectory(oldBookDirectory[0], bookDirectory);
-			logger.info(`update ${bookDirectory.book_name} directory ok!`);
+			bookDirectoryModle.updateBookDirectory(bookDirectory, function() {
+				logger.info(`update ${bookDirectory.book_name} directory ok!`);	
+			});
 		}
 	});
 };

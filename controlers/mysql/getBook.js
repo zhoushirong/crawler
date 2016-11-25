@@ -12,6 +12,6 @@ module.exports = function(callback) {
 		if (!bookList.length) {
 			bookList = "{}";
 		}
-		callback && callback(bookList[0]);
+		callback && callback(bookList);
 	});
 };

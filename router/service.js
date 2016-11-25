@@ -12,8 +12,6 @@ let getBookChapter = require("../controlers").getBookChapter;
 // 获取文章列表
 router.get("/book", function(req, res, next) {
 	getBook(function(directoryData) {
-		directoryData = [directoryData];
-
 		let arr = [];
 		directoryData.forEach(function(tag, i) {
 			let obj = {};

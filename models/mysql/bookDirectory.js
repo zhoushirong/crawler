@@ -26,7 +26,7 @@ function createBookDirectory(obj, callback) {
 
 
 function updateBookDirectory(obj, callback) {
-	let sql = `UPDATE ${BOOK_TABLE} SET book_chapters = ${connection.escape(obj.book_chapters)} WHERE book_name = ${connection.escape(obj.book_name)})`;
+	let sql = `UPDATE ${BOOK_TABLE} SET book_chapters = ${connection.escape(JSON.stringify(obj.book_chapters))} WHERE book_name = ${connection.escape(obj.book_name)})`;
 	connection.query(sql, function(err, result) {
 		if (err) {
 			throw err;

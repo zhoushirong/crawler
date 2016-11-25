@@ -7,11 +7,12 @@ for (var i = 0; i < 120; i++) {
 	})(i);
 }
 
-var reg1 = /^[a-z]{0,8}$/g;
-var reg2 = /^\d{0,6}$/g;
+var reg1 = /^\w{0,3}$/g;
+var reg2 = /^[a-z]{0,5}$/g;
+var reg3 = /^\d{0,6}$/g;
 
 setTimeout(function() {
-	var comArr1 = [],comArr2=[];
+	var comArr1 = [],comArr2=[], comArr3 = [];
 	$(".000").each(function() {
 		var txt = $(this).text().replace(".com", "");
 		if (reg1.test(txt)) {
@@ -22,9 +23,11 @@ setTimeout(function() {
 	});
 	comArr1 = Distinct(comArr1);
 	comArr2 = Distinct(comArr2);
+	comArr3 = Distinct(comArr3);
 	console.log(comArr1.length, comArr1.join("\n"));
 	console.log(comArr2.length, comArr2.join("\n"));
-}, 20 * 1000);
+	console.log(comArr2.length, comArr3.join("\n"));
+}, 15 * 1000);
 
 function Distinct(arr) {
 	var obj = {}, newArr= [];
