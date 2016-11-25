@@ -9,6 +9,7 @@ let connection = mysql.createConnection({
 	user: config.user,
 	password: config.password,
 	database: config.dbname,
+	charset: "utf8_general_ci"
 });
 let BOOK_TABLE = "bookDirectory";
 
