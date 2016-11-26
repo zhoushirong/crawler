@@ -160,9 +160,7 @@ function saveBookChapter(obj) {
 };
 
 module.exports = function(bookId, num) {
-	bookModle.searchBookById({
-		"id": bookId
-	}, function(book) {
+	bookModle.searchBookById(bookId, function(book) {
 		if (book.length) {
 			bookName = book[0].book_name;
 			let url = book[0].book_source;

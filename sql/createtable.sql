@@ -16,7 +16,7 @@ create table if not exists bookDirectory
 (
 	id int unsigned not null auto_increment primary key,
 	book_name varchar(100) null,
-	book_chapters text null
+	book_chapters mediumtext null
 ) engine=innodb default charset=utf8;
 
 create table if not exists bookChapter 

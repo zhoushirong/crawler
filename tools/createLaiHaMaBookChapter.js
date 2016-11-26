@@ -4,6 +4,6 @@
 */
 
 let createBookChapter = require("../controlers").grabBookChapter;
-createBookChapter("陈二狗的妖孽人生");
+createBookChapter("老子是癞蛤蟆");
 
 
