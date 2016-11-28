@@ -13,12 +13,14 @@ let getBookChapter = require("../controlers").getBookChapter;
 router.get("/book", function(req, res, next) {
 	getBook(function(directoryData) {
 		let arr = [];
-		directoryData.forEach(function(tag, i) {
-			let obj = {};
-			obj.id = tag.id;
-			obj.title = tag.book_name;
-			arr.push(obj);
-		});
+		if (directoryData && typeof directoryData === "object") {
+			directoryData.forEach(function(tag, i) {
+				let obj = {};
+				obj.id = tag.id;
+				obj.title = tag.book_name;
+				arr.push(obj);
+			});
+		}
 		res.json({
 			"status": 1,
 			"data": arr,
@@ -31,9 +33,13 @@ router.get("/book", function(req, res, next) {
 router.get("/book/:id", function(req, res, next) {
 	let id = req.params.id;
 	getBookDirectory(id, function(directoryData) {
+		var arr = [];
+		if (directoryData && typeof directoryData === "object") {
+			arr = JSON.parse(directoryData.book_chapters);
+		}
 		res.json({
 			"status": 1,
-			"data": JSON.parse(directoryData.book_chapters),
+			"data": arr,
 			serverTime: Date.now()
 		});
 	});
@@ -45,11 +51,11 @@ router.get("/book/:id/:num", function(req, res, next) {
 	let num = req.params.num;
 	let content = null,
 		title = null;
-	getBookChapter(id, num, function(contentData) {console.log(id, num , 'haahhahaha');
-		let title = contentData.book_chapter_name;
-		let content = contentData.book_chapter_content;
-		let pre = JSON.parse(contentData.book_chapter_previous);
-		let next = JSON.parse(contentData.book_chapter_next);
+	getBookChapter(id, num, function(contentData) {
+		let title = contentData.book_chapter_name || "";
+		let content = contentData.book_chapter_content || "";
+		let pre = JSON.parse(contentData.book_chapter_previous) || "";
+		let next = JSON.parse(contentData.book_chapter_next) || "";
 		res.json({
 			"status": 1,
 			"data": {

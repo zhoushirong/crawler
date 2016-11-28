@@ -8,12 +8,12 @@ let mongoConfig = {
 	dbname: "crawler"
 };
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'production') {
 	mongoConfig = {
 		host: '127.0.0.1',
 		port: 3306,
 		user: 'root',
-		password: '123456',
+		password: null,
 		dbname: "crawler"
 	};
 }
