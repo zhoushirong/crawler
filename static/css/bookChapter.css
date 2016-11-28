@@ -17,4 +17,9 @@ h2.book_title {
 	padding:6px;
 	margin-right:6px;
 }
+.reload{
+	display: block;
+	width:100%;
+	text-align: center;
+}
 

@@ -1,5 +1,6 @@
 @charset "utf-8";
 body{font-family: 'Microsoft YaHei', '黑体', '宋体'; background:#efefef;}
+.hide {display: none;}
 .header{
 	width:100%;
 }

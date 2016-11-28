@@ -44,17 +44,15 @@ export class BookNav extends React.Component {
 
 export default class Book extends React.Component {
   constructor(){
-      super();
-      this.state = {
-          data:{}
-      };
+    super();
+    this.state = {
+        data:{}
+    };
   }
 
   componentWillReceiveProps(nextProps){
-    if(this.props.params.num !== nextProps.params.num){
-      this.props.params.num = nextProps.params.num;
-      this.getBook()
-    }
+    this.props.params.num = nextProps.params.num;
+    this.getBook()
   }
 
   componentDidMount(){
@@ -62,35 +60,36 @@ export default class Book extends React.Component {
   }
 
   render() {
-      return (
-        <div className="container">
-          <div className="row">
-  	      	<h2 className="book_title">{this.state.data.title}</h2>
-  	      	<div className="main book_content">
-  	      		<p dangerouslySetInnerHTML={{__html:this.state.data.content}}></p>
-  	      	</div>
-          </div>
-          <div className="book-nav row text-right">
-            <BookNav data={this.state.data}/>
-          </div>
+    return (
+      <div className="container">
+        <div className="row">
+	      	<h2 className="book_title">{this.state.data.title}</h2>
+	      	<div className="main book_content">
+            <Link className={this.state.data.content ? 'hide reload' : 'reload'} to={`/book/${this.props.params.id}/${this.props.params.num}`}>点击重新加载</Link>
+	      		<p dangerouslySetInnerHTML={{__html:this.state.data.content}}></p>
+	      	</div>
         </div>
-      )
+        <div className="book-nav row text-right">
+          <BookNav data={this.state.data}/>
+        </div>
+      </div>
+    )
   }
 
   //获取正文
   getBook(){
-      let _this = this;
-      let id = this.props.params.id;
-      let num = this.props.params.num;
-      let url = "/service/book/"+id+"/"+num;
-       $.ajax({
-          url:url,
-          type:'GET',
-       }).done(function(result){
-          result.data.bookid = id;
-          _this.setState({
-            data:result.data
-          });
-       }.bind(_this));
+    let _this = this;
+    let id = this.props.params.id;
+    let num = this.props.params.num;
+    let url = "/service/book/"+id+"/"+num;
+     $.ajax({
+        url:url,
+        type:'GET',
+     }).done(function(result){
+        result.data.bookid = id;
+        _this.setState({
+          data:result.data
+        });
+     }.bind(_this));
    }
 }
