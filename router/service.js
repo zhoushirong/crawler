@@ -54,8 +54,8 @@ router.get("/book/:id/:num", function(req, res, next) {
 	getBookChapter(id, num, function(contentData) {
 		let title = contentData.book_chapter_name || "";
 		let content = contentData.book_chapter_content || "";
-		let pre = JSON.parse(contentData.book_chapter_previous) || "";
-		let next = JSON.parse(contentData.book_chapter_next) || "";
+		let pre = contentData.book_chapter_previous ? JSON.parse(contentData.book_chapter_previous) : "";
+		let next = contentData.book_chapter_next ? JSON.parse(contentData.book_chapter_next) : "";
 		res.json({
 			"status": 1,
 			"data": {

@@ -65,7 +65,7 @@ export default class Book extends React.Component {
       return (
         <div className="container">
           <div className="row">
-  	      	<h2>{this.state.data.title}</h2>
+  	      	<h2 className="book_title">{this.state.data.title}</h2>
   	      	<div className="main book_content">
   	      		<p dangerouslySetInnerHTML={{__html:this.state.data.content}}></p>
   	      	</div>
