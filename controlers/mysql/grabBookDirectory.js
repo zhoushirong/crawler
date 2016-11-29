@@ -9,10 +9,12 @@ let bookModle = models.Book;
 let bookDirectoryModle = models.BookDirectory;
 
 let bookName = "";
+let bookId = "";
 
 class BookDirectory {
 	constructor(obj) {
 		this.book_name = obj.bookName || "";
+		this.book_id = obj.bookId || "";
 		this.book_chapters = obj.chapters || "";
 	}
 }
@@ -23,6 +25,7 @@ class BookDirectory {
 function crawlerCallback(error, result, $) {
 	let currentBook = {};
 	currentBook.bookName = bookName;
+	currentBook.bookId = bookId;
 	let urls = $('#at td a');
 	currentBook.chapters = []; //保存章节信息
 
@@ -45,15 +48,15 @@ function crawlerCallback(error, result, $) {
 function saveDirectory(obj) {
 	let bookDirectory = new BookDirectory(obj);
 	bookDirectoryModle.searchBookDirectory({
-		"book_name": bookDirectory.book_name
+		"book_id": bookDirectory.book_id
 	}, function(oldBookDirectory) {
 		if (!oldBookDirectory.length) {
 			bookDirectoryModle.createBookDirectory(bookDirectory, function() {
-				logger.info(`create ${bookDirectory.book_name} directory ok!`);	
+				logger.info(`create ${bookDirectory.book_name} directory ok!`);
 			});
 		} else {
 			bookDirectoryModle.updateBookDirectory(bookDirectory, function() {
-				logger.info(`update ${bookDirectory.book_name} directory ok!`);	
+				logger.info(`update ${bookDirectory.book_name} directory ok!`);
 			});
 		}
 	});
@@ -69,6 +72,7 @@ module.exports = function(name) {
 	}, function(book) {
 		if (book.length) {
 			let url = book[0].book_source;
+			bookId = book[0].id;
 			let getDir = new Crawler({
 				jQuery: jsdom,
 				maxConnections: 100,

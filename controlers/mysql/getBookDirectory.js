@@ -7,20 +7,11 @@ let searchBookDirectory = models.BookDirectory.searchBookDirectory;
 /**
 * 获取数据
 */
-function searchBookNameById(id, callback) {
-	searchBookById(id, function(book) {
-		if (!book.length) {
-			throw `the book id ${id} is not exist !`;
-		}
-		let bookName = book[0].book_name;
-		callback && callback(bookName);
-	});
-}
 
-function searchBookDirectoryByBookName (bookName, callback) {
-	searchBookDirectory({"book_name" : bookName}, function(bookDirectory) {
+function searchBookDirectoryByBookId (bookId, callback) {
+	searchBookDirectory({"book_id" : bookId}, function(bookDirectory) {
 		if (!bookDirectory.length) {
-			throw `the book ${bookName}'s bookDirectory is not exist !`;
+			throw `the book ${bookId}'s bookDirectory is not exist !`;
 		}
 		let directory = bookDirectory[0];
 		callback && callback(directory);
@@ -28,9 +19,7 @@ function searchBookDirectoryByBookName (bookName, callback) {
 	
 }
 module.exports = function(id, callback) {
-	searchBookNameById(id, function(bookName) {
-		searchBookDirectoryByBookName(bookName, function(directory) {
-			callback && callback(directory);	
-		});
-	});
+	searchBookDirectoryByBookId(id, function(directory) {
+	callback && callback(directory);	
+});
 };

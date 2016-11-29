@@ -13,13 +13,22 @@ let connection = mysql.createConnection({
 let BOOK_TABLE = "bookChapter";
 
 function createBookChapter(obj, callback) {
-	let sql = `INSERT INTO ${BOOK_TABLE} VALUES (
-		0,
+	let sql = `INSERT INTO ${BOOK_TABLE} (
+		book_chapter_number,
+		book_chapter_name,
+		book_chapter_content,
+		book_chapter_previous,
+		book_chapter_next,
+		book_id,
+		book_name
+	) VALUES (
 		${connection.escape(obj.book_chapter_number)},
 		${connection.escape(obj.book_chapter_name)},
 		${connection.escape(obj.book_chapter_content)},
 		${connection.escape(JSON.stringify(obj.book_chapter_previous))}, 
-		${connection.escape(JSON.stringify(obj.book_chapter_next))}
+		${connection.escape(JSON.stringify(obj.book_chapter_next))},
+		${connection.escape(obj.book_id)},
+		${connection.escape(obj.book_name)}
 	)`;
 	connection.query(sql, function(err, result) {
 		if (err) {
@@ -33,7 +42,13 @@ function createBookChapter(obj, callback) {
 
 
 function updateBookChapter(obj, callback) {
-	let sql = `UPDATE ${BOOK_TABLE} SET book_chapter_content = ${connection.escape(obj.book_chapter_content)} WHERE book_chapter_name = ${connection.escape(obj.book_chapter_name)}`;
+	let sql = `UPDATE ${BOOK_TABLE} 
+		SET 
+		book_chapter_content = ${connection.escape(obj.book_chapter_content)} 
+		WHERE 
+		book_id = ${connection.escape(obj.book_id)}
+		AND
+		book_chapter_name = ${connection.escape(obj.book_chapter_name)}`;
 	connection.query(sql, function(err, result) {
 		if (err) {
 			throw err;
@@ -46,7 +61,11 @@ function updateBookChapter(obj, callback) {
 
 
 function searchBookChapter(obj, callback) {
-	let sql = `SELECT * FROM ${BOOK_TABLE} WHERE book_chapter_name = ${connection.escape(obj.book_chapter_name)}`;
+	let sql = `SELECT * FROM ${BOOK_TABLE} 
+	WHERE 
+	book_chapter_number = ${connection.escape(obj.book_chapter_number)}
+	AND 
+	book_id = ${connection.escape(obj.book_id)}`;
 	connection.query(sql, function(err, result) {
 		if (err) {
 			throw err;

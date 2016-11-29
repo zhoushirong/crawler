@@ -11,6 +11,7 @@ let bookDirectoryModle = models.BookDirectory;
 let bookChapterModle = models.BookChapter;
 
 let bookName = null;
+let bookId = null;
 let ids = [];
 
 /**
@@ -18,7 +19,7 @@ let ids = [];
  */
 function initArgs(url) {
 	bookDirectoryModle.searchBookDirectory({
-		"book_name": bookName
+		"book_id": bookId
 	}, function(bookDirectory) {
 		if (!bookDirectory.length) {
 			logger.error(`can't find bookDirectory of ${bookName}, please create it!`);
@@ -56,7 +57,6 @@ function getArticle(url) {
 		maxConnections: 300,
 		forceUTF8: true
 	});
-
 	ids.forEach(function(id, index) {
 		if (index < ids.length) {
 			(function(id) {
@@ -137,6 +137,8 @@ class BookChapter {
 		this.book_chapter_content = obj.content;
 		this.book_chapter_previous = obj.pre;
 		this.book_chapter_next = obj.next;
+		this.book_id = bookId;
+		this.book_name = bookName;
 	}
 }
 
@@ -147,13 +149,14 @@ function saveBookChapter(obj) {
 			return false;
 		}
 		bookChapterModle.searchBookChapter({
+			"book_id": bookChapter.book_id,
 			"book_chapter_number": bookChapter.book_chapter_number
 		}, function(oldBookChapter) {
 			if (!oldBookChapter.length) {
 				bookChapterModle.createBookChapter(bookChapter);
 				logger.info(`create ${bookChapter.book_chapter_number} chapter ok!`);
 			} else {
-				bookChapterModle.updateBookChapter(oldBookChapter[0], bookChapter);
+				bookChapterModle.updateBookChapter(bookChapter);
 				logger.info(`update ${bookChapter.book_chapter_number} chapter ok!`);
 			}
 		});
@@ -167,6 +170,7 @@ module.exports = function(name) {
 	}, function(book) {
 		if (book.length) {
 			let url = book[0].book_source;
+			bookId = book[0].id;
 			initArgs(url);
 			logger.info(`start to create the chapters of the book ${name}`);
 		} else {

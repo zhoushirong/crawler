@@ -15,7 +15,15 @@ let BOOK_TABLE = "bookDirectory";
 
 function createBookDirectory(obj, callback) {
 	let book_chapters = connection.escape(JSON.stringify(obj.book_chapters));
-	let sql = `INSERT INTO ${BOOK_TABLE} VALUES (0, ${connection.escape(obj.book_name)}, ${book_chapters})`;
+	let sql = `INSERT INTO ${BOOK_TABLE} (
+		book_name,
+		book_chapters,
+		book_id
+	) VALUES (
+		${connection.escape(obj.book_name)},
+		${book_chapters},
+		${connection.escape(obj.book_id)}
+	)`;
 	connection.query(sql, function(err, result) {
 		if (err) {
 			throw err;
@@ -28,9 +36,7 @@ function createBookDirectory(obj, callback) {
 
 
 function updateBookDirectory(obj, callback) {
-	console.log(obj);
-	//return false;
-	let sql = `UPDATE ${BOOK_TABLE} SET book_chapters = ${connection.escape(JSON.stringify(obj.book_chapters))} WHERE book_name = ${connection.escape(obj.book_name)}`;
+	let sql = `UPDATE ${BOOK_TABLE} SET book_chapters = ${connection.escape(JSON.stringify(obj.book_chapters))} WHERE book_id = ${connection.escape(obj.book_id)}`;
 	connection.query(sql, function(err, result) {
 		if (err) {
 			throw err;
@@ -43,7 +49,7 @@ function updateBookDirectory(obj, callback) {
 
 
 function searchBookDirectory(obj, callback) {
-	let sql = `SELECT * FROM ${BOOK_TABLE} WHERE book_name = ${connection.escape(obj.book_name)}`;
+	let sql = `SELECT * FROM ${BOOK_TABLE} WHERE book_id = ${connection.escape(obj.book_id)}`;
 	connection.query(sql, function(err, result) {
 		if (err) {
 			throw err;

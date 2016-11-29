@@ -13,7 +13,21 @@ let connection = mysql.createConnection({
 let BOOK_TABLE = "book";
 
 function createBook(obj, callback) {
-	let sql = `INSERT INTO ${BOOK_TABLE} VALUES (0, ${connection.escape(obj.book_name)}, ${connection.escape(obj.book_author)}, 0, null, ${connection.escape(obj.book_source)})`;
+	//let sql = `INSERT INTO ${BOOK_TABLE} VALUES (0, ${connection.escape(obj.book_name)}, ${connection.escape(obj.book_author)}, 0, null, ${connection.escape(obj.book_source)})`;
+	let sql = `INSERT INTO ${BOOK_TABLE} (
+		book_name,
+		book_author,
+		chapter_num,
+		discripe,
+		book_source
+	) VALUES (
+		${connection.escape(obj.book_name)},
+		${connection.escape(obj.book_author)},
+		0,
+		null,
+		${connection.escape(obj.book_source)}
+	)`;
+	
 	connection.query(sql, function(err, result) {
 		if (err) {
 			throw err;
