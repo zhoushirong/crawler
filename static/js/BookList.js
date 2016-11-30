@@ -24,7 +24,7 @@ export default class BookList extends React.Component {
               return (
                 <li>
                   <Link to={"/book/"+item.id}>
-                    <span className="vertical-center">{item.title}</span>
+                    <span className="vertical-center"><p>{item.title}</p><p>作者：{item.author}</p></span>
                   </Link>
                 </li>);
               })

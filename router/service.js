@@ -18,6 +18,7 @@ router.get("/book", function(req, res, next) {
 				let obj = {};
 				obj.id = tag.id;
 				obj.title = tag.book_name;
+				obj.author = tag.book_author;
 				arr.push(obj);
 			});
 		}

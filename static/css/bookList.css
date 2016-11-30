@@ -9,19 +9,25 @@
 	border:1px solid #666;
 	margin-right:10px;
 	overflow: hidden;
-	background: #598;
+	background: #57513e;
 }
 .book-list li:nth-child(1) {
-	background:#958;
+	background:#fe5e3f;
 }
 .book-list li:nth-child(2) {
-	background:#859;
+	background:#fdaa56;
 }
 .book-list li:nth-child(3) {
-	background:#589;
+	background:#e2d442;
 }
 .book-list li:nth-child(4) {
-	background:#998;
+	background:#63ee00;
+}
+.book-list li:nth-child(5) {
+	background:#38b0f4;
+}
+.book-list li:nth-child(6) {
+	background:#17681c;
 }
 .book-list li a{
 	display:table;
