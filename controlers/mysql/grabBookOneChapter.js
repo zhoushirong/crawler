@@ -152,11 +152,13 @@ function saveBookChapter(obj) {
 			"book_chapter_number": bookChapter.book_chapter_number
 		}, function(oldBookChapter) {
 			if (!oldBookChapter.length) {
-				bookChapterModle.createBookChapter(bookChapter);
-				logger.info(`create ${bookChapter.book_chapter_number} chapter ok!`);
+				bookChapterModle.createBookChapter(bookChapter, function() {
+					logger.info(`create ${bookChapter.book_chapter_number},${bookChapter.book_chapter_name} chapter ok!`);	
+				});
 			} else {
-				bookChapterModle.updateBookChapter(bookChapter);
-				logger.info(`update ${bookChapter.book_chapter_number} chapter ok!`);
+				bookChapterModle.updateBookChapter(bookChapter, function() {
+					logger.info(`update ${bookChapter.book_chapter_number},${bookChapter.book_chapter_name} chapter ok!`);	
+				});
 			}
 		});
 	})(obj);
