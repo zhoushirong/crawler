@@ -56,12 +56,7 @@ let config = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: "common",
-      filename: "./staticPub/js/common.js",
-      chunks: ['index']
-    },{
-      name: "common",
-      filename: "./staticPub/js/gameCommon.js",
-      chunks: ['game1', 'game2']
+      chunks: ['index','game1', 'game2']
     }),
     new CopyWebpackPlugin([
     {

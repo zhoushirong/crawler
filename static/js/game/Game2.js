@@ -20,7 +20,7 @@ export class Ball extends React.Component {
 		let bgColor=e.target.title;
 		let cpd = e.clipboardData || window.clipboardData || {};
 		cpd.setData && cpd.setData("Text",bgColor); 
-		alert("当前颜色值为： "+bgColor);
+		alert("当前颜色值为： " + bgColor);
 	}
 	render() {
 		return <div onClick={this.copyBgColor} className="ball" style={this.props.style} title={this.props.bgColor}>
@@ -39,10 +39,9 @@ export class Balls extends React.Component {
 		});
 	}
 	componentDidMount() {
-
 	}
 	render() {
-		let cStr="0123456789abcdef";
+		let cStr="1234567890abcdef";
 		let arr = cStr.split("");
 		let l = cStr.length;
 		let colors = [];

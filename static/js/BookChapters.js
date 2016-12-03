@@ -30,6 +30,7 @@ export default class BookChapters extends React.Component {
     return (
       <div className="container">
         <h1 className="book_name row text-center">{this.state.data.bookName}</h1>
+        <BookNav />
         <ul className="list-unstyled row">
         {
             this.state.data.chapters.map(function(item,index){
@@ -37,6 +38,7 @@ export default class BookChapters extends React.Component {
               })
           }
         </ul>
+        <BookNav />
       </div>
     )
   }
@@ -54,4 +56,18 @@ export default class BookChapters extends React.Component {
         });
      }.bind(_this));
    }
+}
+
+//章节内部导航
+export class BookNav extends React.Component {
+  render() {
+    return (
+      <div className="row">
+        <div className="book-nav text-right">
+          <Link to={`/`}>首页</Link>
+          <Link to={`/book`}>书架</Link>
+        </div>
+      </div>
+    )
+  }
 }
