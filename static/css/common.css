@@ -9,3 +9,7 @@ body{font-family: 'Microsoft YaHei', '黑体', '宋体'; background:#efefef;}
 	width:100%;
 	text-align: center;
 }
+.book_name{
+	font-size:28px;
+	padding:10px 0;
+}

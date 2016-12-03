@@ -7,7 +7,10 @@ export default class BookChapters extends React.Component {
   constructor(){
     super();
     this.state = {
-      data:[]
+      data:{
+        bookName:"",
+        chapters:[]
+      }
     };
   }
 
@@ -26,9 +29,10 @@ export default class BookChapters extends React.Component {
   	var _this = this;
     return (
       <div className="container">
+        <h1 className="book_name row text-center">{this.state.data.bookName}</h1>
         <ul className="list-unstyled row">
         {
-            this.state.data.map(function(item,index){
+            this.state.data.chapters.map(function(item,index){
               return (<li className="col-lg-3 col-md-4 col-sm-6 col-xs-12" key={item.num}><Link to={`/book/${_this.props.params.id}/${item.num}`}>{item.title}</Link></li>);
               })
           }
@@ -44,6 +48,7 @@ export default class BookChapters extends React.Component {
         url:url,
         type:'GET',
      }).done(function(result){
+      console.log(result);
         _this.setState({
           data:result.data
         });

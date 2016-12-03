@@ -62,15 +62,23 @@ export default class Book extends React.Component {
   render() {
     return (
       <div className="container">
+        <h1 className="book_name row text-center">{this.state.data.bookName}</h1>
         <div className="row">
-	      	<h2 className="book_title">{this.state.data.title}</h2>
-	      	<div className="main book_content">
-            <Link className={this.state.data.content ? 'hide reload' : 'reload'} to={`/book/${this.props.params.id}/${this.props.params.num}`}>点击重新加载</Link>
-	      		<p dangerouslySetInnerHTML={{__html:this.state.data.content}}></p>
-	      	</div>
+          <h2 className="book_title col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            {this.state.data.title}
+          </h2>
+          <div className="book-nav book-top-nav text-right col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <BookNav data={this.state.data}/>
+          </div>
         </div>
-        <div className="book-nav row text-right">
-          <BookNav data={this.state.data}/>
+      	<div className="row main book_content">
+          <Link className={this.state.data.content ? 'hide reload' : 'reload'} to={`/book/${this.props.params.id}/${this.props.params.num}`}>点击重新加载</Link>
+      		<p dangerouslySetInnerHTML={{__html:this.state.data.content}}></p>
+      	</div>
+        <div className="row">
+          <div className="book-nav text-right">
+            <BookNav data={this.state.data}/>
+          </div>
         </div>
       </div>
     )

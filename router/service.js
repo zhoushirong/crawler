@@ -40,7 +40,10 @@ router.get("/book/:id", function(req, res, next) {
 		}
 		res.json({
 			"status": 1,
-			"data": arr,
+			"data": {
+				chapters:arr,
+				bookName: directoryData.book_name
+			},
 			serverTime: Date.now()
 		});
 	});
@@ -60,6 +63,7 @@ router.get("/book/:id/:num", function(req, res, next) {
 		res.json({
 			"status": 1,
 			"data": {
+				bookName: contentData.book_name,
 				title: title,
 				content: content,
 				pre: pre,

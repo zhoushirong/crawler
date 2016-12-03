@@ -8,14 +8,19 @@
 	line-height: 32px;
 }
 h2.book_title {
+	text-indent: 15px;
 	font-size: 24px;
 }
+
 .book-nav {
-	margin: 0 0 30px 0;
+	margin: 0 0 10px 0;
 }
 .book-nav a{
 	padding:6px;
 	margin-right:6px;
+}
+.book-nav.book-top-nav {
+	margin:30px 0 0 0;
 }
 .reload{
 	display: block;
