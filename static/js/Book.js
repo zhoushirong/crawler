@@ -64,10 +64,10 @@ export default class Book extends React.Component {
       <div className="container">
         <h1 className="book_name row text-center">{this.state.data.bookName}</h1>
         <div className="row">
-          <h2 className="book_title col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <h2 className="book_title col-lg-6 col-md-12 col-sm-12 col-xs-12">
             {this.state.data.title}
           </h2>
-          <div className="book-nav book-top-nav text-right col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <div className="book-nav book-top-nav text-right col-lg-6 col-md-12 col-sm-12 col-xs-12">
             <BookNav data={this.state.data}/>
           </div>
         </div>
