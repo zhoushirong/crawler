@@ -10,7 +10,7 @@ var routeArr=['/','/book','/book/:id','/book/:id/:num','/game'];
 router.get(routeArr,function(req, res, next){
 	res.render("index", {
 		title:"邑抔司",
-		pageKeywords: "邑抔司,开心一刻,开心一下,烽火戏诸侯,陈二狗的妖孽人生,雪中悍刀行",
+		pageKeywords: "邑抔司,烽火戏诸侯,猫腻,血红,陈二狗的妖孽人生,雪中悍刀行,极品公子,将夜,老子是癞蛤蟆,逍行记,庆余年,择天记",
 		pageDescription: "邑抔司",
 		data: {}
 	});
