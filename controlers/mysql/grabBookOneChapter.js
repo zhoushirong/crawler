@@ -18,6 +18,7 @@ let ids = [];
  * 初始化文章列表
  */
 function initArgs(url, num) {
+	ids = [];
 	bookDirectoryModle.searchBookDirectory({
 		"book_id": bookId
 	}, function(bookDirectory) {
@@ -28,7 +29,6 @@ function initArgs(url, num) {
 
 		let bookChapters = JSON.parse(bookDirectory[0].book_chapters);
 		ids.push(num);
-
 		if (ids.length === 0) {
 			return false;
 		}
@@ -55,14 +55,8 @@ function getArticle(url) {
 		maxConnections: 300,
 		forceUTF8: true
 	});
-	ids.length = 2; /////////////////////////////////////testestest
-	ids.forEach(function(id, index) {
-		if (index < ids.length) {
-			(function(id) {
-				getSingleArticle(getDir, url, id);
-			})(id);
-		}
-	});
+	console.log(ids, 333);
+	getSingleArticle(getDir, url, ids[0]);
 }
 
 /**
@@ -171,6 +165,7 @@ module.exports = function(bid, num) {
 			bookName = book[0].book_name;
 			bookId = book[0].id;
 			initArgs(url, num);
+
 			logger.info(`start to create the chapters of the book ${bookName}`);
 		} else {
 			logger.info(`the book ${bookName} is not exsit! you can try create it`);
