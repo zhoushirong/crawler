@@ -1,6 +1,6 @@
 "use strict";
 /**
-* 创建陈二狗的妖孽人生小说
+* 创建老子是癞蛤蟆小说
 */
 
 let createBook = require("../controlers").createBook;
